@@ -216,7 +216,7 @@ For servers, you need to replace the "java" command in your server start sh/bat 
 
 Alternatively, you can install it system-wide by following Oracle's guide: https://www.graalvm.org/latest/docs/getting-started/
 
-GraalVM EE Java Arguments
+GraalVM Java Arguments
 ======
 
 Arguments for GraalVM Java 17 & 20
@@ -224,23 +224,6 @@ Arguments for GraalVM Java 17 & 20
 ```-XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+AlwaysActAsServerClassMachine -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+UseNUMA -XX:AllocatePrefetchStyle=3 -XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=400M -XX:NonNMethodCodeHeapSize=12M -XX:ProfiledCodeHeapSize=194M -XX:NonProfiledCodeHeapSize=194M -XX:-DontCompileHugeMethods -XX:+PerfDisableSharedMem -XX:+UseFastUnorderedTimeStamps -XX:+UseCriticalJavaThreadPriority -XX:+EagerJVMCI -Dgraal.TuneInlinerExploration=1 -Dgraal.CompilerConfiguration=enterprise```
 
 **You must use G1GC or ZGC with these arguments.** GraalVM currently doesn't work with Shenandoah.  
-
-<br/>
-
-GraalVM EE Mod Compatibility
-======
-
-**GraalVM EE 22.3.0 fixed all known Minecraft bugs**
-
-If you run an older, Java 8-based version of GraalVM EE, there are some potential issues:
-
-- `VectorizeSIMD` turns entities invisible with shader mods like Optifine, Iris or Occulus... but only under certain conditions. This will be fixed in GraalVM EE 22.3.0. See: https://github.com/oracle/graal/issues/4849
-
-- GraalVM CE and EE both break constellation rendering in 1.16.5 Astral Sorcery. This is possibly related to the shader bug. See: https://github.com/HellFirePvP/AstralSorcery/issues/1963
-
-I have not observed any server-side bugs yet. 
-
-If you run into any other mod issues you can trace back to GraalVM, please create a Github issue or post in the Discord! Generally, you can work around them by disabling major `dgraal` optimization flags, or by finding the right function with `Dgraal.PrintCompilation=true`, and working around it with `-Dgraal.GraalCompileOnly=~...` once you find the miscompiled function.
 
 <br/>
 
